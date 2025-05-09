@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta name="description" content="Tesla TV provides premium IPTV access with 2051+ channels, 2735+ VOD, and 24/7 support. Get your free trial now!">
+<meta name="keywords" content="IPTV, Tesla TV, Watch TV Online, IPTV Free Trial, Smart TV, Enigma, Dream Box">
+<meta property="og:title" content="Tesla TV - Premium IPTV Service">
+<meta property="og:description" content="Get 24H Free IPTV Trial + 2051+ Live Channels & VOD">
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/b/bd/Tesla_Motors.svg">
+<meta property="og:url" content="https://tesla-tv.vercel.app/">
+<meta name="twitter:card" content="summary_large_image">
 <style>
   html {
     scroll-behavior: smooth;
@@ -23,7 +30,7 @@
 </script>
 <noscript>
   <img height="1" width="1" style="display:none" 
-  src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
+  src="https://www.facebook.com/tr?id=673047952118955&ev=PageView&noscript=1"/>
 </noscript>
 <!-- End Facebook Pixel Code -->
 
@@ -156,7 +163,8 @@
 
 <section id="free-trial" style="padding: 80px 20px; background-color: #111; color: #fff;">
   <h2 style="text-align:center; color: #e50914;">Try Tesla TV for 24 Hours – Free!</h2>
-  <p style="text-align:center;">Fill out the form below to receive your free IPTV trial via email.</p>
+  <p style="text-align:center;">Fill out the form below to receive your free IPTV trial via email. <br>
+    You will be contacted within <strong>24 hours</strong> via the email you provide.</p>
 
   <div style="display: flex; justify-content: center;">
     <form id="trialForm" 
@@ -170,10 +178,13 @@
              style="width: 100%; padding: 10px; margin: 10px 0; border: none; border-radius: 5px; background: #333; color: #fff;" />
       
       <button type="submit" 
-              style="width: 100%; background: #e50914; color: #fff; padding: 10px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;"
-              onclick="fbq('track', 'Lead');">
+              style="width: 100%; background: #e50914; color: #fff; padding: 10px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">
         Request Free Trial
       </button>
+
+      <p style="color: #999; margin-top: 15px; font-size: 13px; text-align: center;">
+        📧 We’ll send your trial details via email within 24 hours.
+      </p>
       
       <div id="success-message" style="display:none; margin-top: 20px; color: #00ff88; text-align: center;">
         🎉 Success! Check your email for your Tesla TV trial details.
@@ -181,38 +192,6 @@
     </form>
   </div>
 </section>
-
-
-<script>
-  document.getElementById("trialForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-    const form = e.target;
-    const data = {
-      name: form.name.value,
-      email: form.email.value
-    };
-
-    fetch("https://script.google.com/macros/s/AKfycbwWAtMIhio0ZtQ_VJcYSu1oq1Id4u330TYZEstBPwmGYPhF2q6c1K-IUOM-zFy74aVu/exec", {
-      method: "POST",
-      body: JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .then(result => {
-      if (result.status === "sent") {
-        form.style.display = "none";
-        document.getElementById("success-message").style.display = "block";
-      } else {
-        alert("❌ Something went wrong: " + result.message);
-      }
-    })
-    .catch(err => {
-      alert("❌ Network error: " + err.message);
-    });
-  });
-</script>
-
-<footer>
-  &copy; 2025 Tesla TV. All rights reserved.
 
 <section id="guide" style="padding: 80px 20px 120px 20px; background-color: #181818;">
   <h2 style="text-align:center; color: #e50914;">Guide</h2>
@@ -232,21 +211,44 @@
   </p>
 </section>
 
+<footer>
+  &copy; 2025 Tesla TV. All rights reserved.
+
 </footer>
 
 <script>
   document.getElementById("trialForm").addEventListener("submit", function(e) {
-    e.preventDefault(); // يمنع الفورم من إعادة تحميل الصفحة
+    e.preventDefault(); // يمنع الريلود التلقائي
 
-    // سجل الحدث في Facebook Pixel
+    const form = e.target;
+    const data = {
+      name: form.name.value,
+      email: form.email.value
+    };
+
+    // ✅ Track with Meta Pixel
     fbq('track', 'Lead');
 
-    // أظهر رسالة النجاح
-    document.getElementById("success-message").style.display = "block";
-
-    // لو عايز تبعت البيانات أو تعمل redirect، تقدر تضيف هنا
-    // مثلاً:
-    // window.location.href = 'thankyou.html';
+    // ✅ Send data to Google Script
+    fetch("https://script.google.com/macros/s/AKfycbwxnc_BhuAU9_GzvjJs0zMhA5aqdwSwcVWfUdtW_n7_p22I5BRNb-K46m1CVn16utyF/exec", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    .then(response => response.json())
+    .then(result => {
+      if (result.status === "sent") {
+        form.style.display = "none";
+        document.getElementById("success-message").style.display = "block";
+      } else {
+        alert("❌ Something went wrong: " + result.message);
+      }
+    })
+    .catch(err => {
+      alert("❌ Network error: " + err.message);
+    });
   });
 </script>
 </body>
