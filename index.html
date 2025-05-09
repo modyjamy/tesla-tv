@@ -1,6 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<style>
+  html {
+    scroll-behavior: smooth;
+  }
+</style>
+<link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/b/bd/Tesla_Motors.svg">
+
+<script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  
+  fbq('init', '673047952118955'); 
+  fbq('track', 'PageView');
+</script>
+<noscript>
+  <img height="1" width="1" style="display:none" 
+  src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
+</noscript>
+<!-- End Facebook Pixel Code -->
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tesla TV - Premium IPTV Service</title>
@@ -35,7 +61,7 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      padding: 40px 20px;
+      padding: 80px 20px 120px 20px;
       gap: 30px;
     }
     .card {
@@ -83,44 +109,112 @@
 <nav style="background-color: #111; padding: 10px 20px; text-align: center;">
   <a href="#guide" style="color: #ccc; margin: 0 15px; text-decoration: none;">Guide</a>
   <a href="#contact" style="color: #ccc; margin: 0 15px; text-decoration: none;">Contact Us</a>
+   <a href="#pricing" style="color: #ccc; margin: 0 15px; text-decoration: none;">View Plans</a>
 </nav>
 
 
-<header>
-  <h1>Tesla TV</h1>
-  <p>Premium IPTV Access – Fast, Reliable, 24/7 Support</p>
-  <a href="https://wa.me/201147567744" onclick="fbq('track', 'Lead');">GET TRIAL ON WHATSAPP</a>
-</header>
+<header style="text-align: center; padding: 60px 20px;">
+  <h1 style="color: #fff;">Tesla TV</h1>
+  <p style="color: #ccc;">Premium IPTV Access – Fast, Reliable, 24/7 Support</p>
 
-<section class="plans">
+  <a href="#free-trial"
+     style="display: inline-block; margin-top: 20px; background-color: #e50914; color: #fff; padding: 12px 25px; border-radius: 6px; text-decoration: none; font-weight: bold;">
+    Try Free for 24 Hours
+  </a>
+</header>
+<section class="plans" id="pricing">
 
   <div class="card">
     <h3>3 MONTHS</h3>
     <div class="price">$ 25</div>
     <ul><li>2051+ LIVE CHANNEL</li><li>2735+ NEW VOD</li><li>MANY SERIES</li><li>Support for mobile, mag box, smart TV, Android, enigma 2, dream box, and PC</li><li>24/7 email support</li></ul>
-    <a href="https://wa.me/201147567744">CONTACT ON WHATSAPP</a>
+    <a href="https://wa.me/201147567744" onclick="fbq('track', 'Contact');">
+  🎯 Activate Now via WhatsApp
+      </a>
   </div>
 
   <div class="card">
     <h3>6 MONTHS</h3>
     <div class="price">$ 45</div>
     <ul><li>2051+ LIVE CHANNEL</li><li>2735+ NEW VOD</li><li>MANY SERIES</li><li>Support for mobile, mag box, smart TV, Android, enigma 2, dream box, and PC</li><li>24/7 email support</li></ul>
-    <a href="https://wa.me/201147567744">CONTACT ON WHATSAPP</a>
+    <a href="https://wa.me/201147567744" onclick="fbq('track', 'Contact');">
+  🎯 Activate Now via WhatsApp
+      </a>
   </div>
 
   <div class="card">
     <h3>12 MONTHS</h3>
     <div class="price">$ 70</div>
     <ul><li>2051+ LIVE CHANNEL</li><li>2735+ NEW VOD</li><li>MANY SERIES</li><li>Support for mobile, mag box, smart TV, Android, enigma 2, dream box, and PC</li><li>24/7 email support</li></ul>
-    <a href="https://wa.me/201147567744">CONTACT ON WHATSAPP</a>
+    <a href="https://wa.me/201147567744" onclick="fbq('track', 'Contact');">
+  🎯 Activate Now via WhatsApp
+      </a>
   </div>
 
 </section>
 
+
+<section id="free-trial" style="padding: 80px 20px; background-color: #111; color: #fff;">
+  <h2 style="text-align:center; color: #e50914;">Try Tesla TV for 24 Hours – Free!</h2>
+  <p style="text-align:center;">Fill out the form below to receive your free IPTV trial via email.</p>
+
+  <div style="display: flex; justify-content: center;">
+    <form id="trialForm" 
+          style="width: 100%; max-width: 400px; background: #222; padding: 20px; border-radius: 10px; 
+                 display: flex; flex-direction: column; align-items: center; margin: 0 auto;">
+      
+      <input type="text" name="name" placeholder="Full Name" required 
+             style="width: 100%; padding: 10px; margin: 10px 0; border: none; border-radius: 5px; background: #333; color: #fff;" />
+      
+      <input type="email" name="email" placeholder="Email Address" required 
+             style="width: 100%; padding: 10px; margin: 10px 0; border: none; border-radius: 5px; background: #333; color: #fff;" />
+      
+      <button type="submit" 
+              style="width: 100%; background: #e50914; color: #fff; padding: 10px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;"
+              onclick="fbq('track', 'Lead');">
+        Request Free Trial
+      </button>
+      
+      <div id="success-message" style="display:none; margin-top: 20px; color: #00ff88; text-align: center;">
+        🎉 Success! Check your email for your Tesla TV trial details.
+      </div>
+    </form>
+  </div>
+</section>
+
+
+<script>
+  document.getElementById("trialForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const form = e.target;
+    const data = {
+      name: form.name.value,
+      email: form.email.value
+    };
+
+    fetch("https://script.google.com/macros/s/AKfycbwWAtMIhio0ZtQ_VJcYSu1oq1Id4u330TYZEstBPwmGYPhF2q6c1K-IUOM-zFy74aVu/exec", {
+      method: "POST",
+      body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(result => {
+      if (result.status === "sent") {
+        form.style.display = "none";
+        document.getElementById("success-message").style.display = "block";
+      } else {
+        alert("❌ Something went wrong: " + result.message);
+      }
+    })
+    .catch(err => {
+      alert("❌ Network error: " + err.message);
+    });
+  });
+</script>
+
 <footer>
   &copy; 2025 Tesla TV. All rights reserved.
 
-<section id="guide" style="padding: 40px 20px; background-color: #181818;">
+<section id="guide" style="padding: 80px 20px 120px 20px; background-color: #181818;">
   <h2 style="text-align:center; color: #e50914;">Guide</h2>
   <p style="max-width: 800px; margin: auto; color: #ccc; text-align: center;">
     To activate your subscription, follow these steps:<br>
@@ -131,7 +225,7 @@
   </p>
 </section>
 
-<section id="contact" style="padding: 40px 20px; background-color: #101010;">
+<section id="contact" style="padding: 80px 20px 120px 20px; background-color: #101010;">
   <h2 style="text-align:center; color: #e50914;">Contact Us</h2>
   <p style="text-align:center; color: #ccc;">
     Reach us via <a href="https://wa.me/201147567744" style="color: #4caf50;">WhatsApp</a> or email: support@tesla-tv.com
@@ -140,5 +234,20 @@
 
 </footer>
 
+<script>
+  document.getElementById("trialForm").addEventListener("submit", function(e) {
+    e.preventDefault(); // يمنع الفورم من إعادة تحميل الصفحة
+
+    // سجل الحدث في Facebook Pixel
+    fbq('track', 'Lead');
+
+    // أظهر رسالة النجاح
+    document.getElementById("success-message").style.display = "block";
+
+    // لو عايز تبعت البيانات أو تعمل redirect، تقدر تضيف هنا
+    // مثلاً:
+    // window.location.href = 'thankyou.html';
+  });
+</script>
 </body>
 </html>
