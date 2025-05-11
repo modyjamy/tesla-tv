@@ -231,24 +231,24 @@
 
     // ✅ Send data to Google Script
     fetch("https://script.google.com/macros/s/AKfycbzgldo48Xc1EqwvdiSijMF7xwmn6J5n39LVfFCgCb_6S3DUNlzVDNwLkUNO55dPZ3ll2w/exec", {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-    .then(response => response.json())
-    .then(result => {
-      if (result.status === "sent") {
-        form.style.display = "none";
-        document.getElementById("success-message").style.display = "block";
-      } else {
-        alert("❌ Something went wrong: " + result.message);
-      }
-    })
-    .catch(err => {
-      alert("❌ Network error: " + err.message);
-    });
+  method: "POST",
+  headers: {
+    "Content-Type": "application/x-www-form-urlencoded"
+  },
+  body: new URLSearchParams(data).toString()
+})
+.then(response => response.json())
+.then(result => {
+  if (result.status === "sent") {
+    form.style.display = "none";
+    document.getElementById("success-message").style.display = "block";
+  } else {
+    alert("❌ Something went wrong: " + result.message);
+  }
+})
+.catch(err => {
+  alert("❌ Network error: " + err.message);
+});
   });
 </script>
 </body>
