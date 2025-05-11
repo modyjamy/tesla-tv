@@ -214,8 +214,6 @@
 <footer>
   &copy; 2025 Tesla TV. All rights reserved.
 
-</footer>
-
 <script>
   document.getElementById("trialForm").addEventListener("submit", function(e) {
     e.preventDefault(); // يمنع الريلود التلقائي
@@ -229,26 +227,28 @@
     // ✅ Track with Meta Pixel
     fbq('track', 'Lead');
 
-    // ✅ Send data to Google Script
-    fetch("https://script.google.com/macros/s/AKfycbzgldo48Xc1EqwvdiSijMF7xwmn6J5n39LVfFCgCb_6S3DUNlzVDNwLkUNO55dPZ3ll2w/exec", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/x-www-form-urlencoded"
-  },
-  body: new URLSearchParams(data).toString()
-})
-.then(response => response.json())
-.then(result => {
-  if (result.status === "sent") {
-    form.style.display = "none";
-    document.getElementById("success-message").style.display = "block";
-  } else {
-    alert("❌ Something went wrong: " + result.message);
-  }
-})
-.catch(err => {
-  alert("❌ Network error: " + err.message);
-});
+    // ✅ Send data to your Vercel API
+    fetch("/api/trial", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(result => {
+      if (result.status === "sent") {
+        form.style.display = "none";
+        document.getElementById("trial-link").textContent = result.data.url;
+        document.getElementById("trial-link").href = result.data.url;
+        document.getElementById("success-message").style.display = "block";
+      } else {
+        alert("❌ Something went wrong: " + result.message);
+      }
+    })
+    .catch(err => {
+      alert("❌ Network error: " + err.message);
+    });
   });
 </script>
 </body>
