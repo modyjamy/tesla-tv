@@ -30,10 +30,8 @@ http://m3u-domain.com/get.php?username=testuser&password=testpass&type=m3u_plus&
     `
   };
 
-  try {
-    await transporter.sendMail(mailOptions);
-    return res.status(200).json({ status: "sent" });
-  } catch (error) {
-    return res.status(500).json({ status: "error", message: error.message });
-  }
-}
+  return await transporter.sendMail(mailOptions).then(() => {
+  res.status(200).json({ status: "sent" });
+}).catch(error => {
+  res.status(500).json({ status: "error", message: error.message });
+});
