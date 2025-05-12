@@ -240,8 +240,6 @@
     .then(result => {
       if (result.status === "sent") {
         form.style.display = "none";
-        document.getElementById("trial-link").textContent = result.data.url;
-        document.getElementById("trial-link").href = result.data.url;
         document.getElementById("success-message").style.display = "block";
       } else {
         alert("❌ Something went wrong: " + result.message);
