@@ -11,27 +11,31 @@ export default async function handler(req, res) {
     service: "gmail",
     auth: {
       user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS
-    }
+      pass: process.env.EMAIL_PASS,
+    },
   });
 
   const mailOptions = {
     from: `"Tesla TV" <${process.env.EMAIL_USER}>`,
     to: email,
-    subject: "🎁 Tesla TV - 24H Free Trial Access",
+    subject: "📺 Tesla TV - 24H Free Trial Access",
     html: `
-      <h2>🎉 Your Free Trial is Ready!</h2>
+      <h2>📺 Your Free Trial is Ready!</h2>
       <p>Hi <strong>${name}</strong>,</p>
       <p>Here is your 24H IPTV trial:</p>
       <pre><code>
 http://m3u-domain.com/get.php?username=testuser&password=testpass&type=m3u_plus&output=ts
       </code></pre>
-      <p>Enjoy streaming! 🚀</p>
-    `
+      <p>Enjoy streaming! 🎬</p>
+    `,
   };
 
-  return await transporter.sendMail(mailOptions).then(() => {
-  res.status(200).json({ status: "sent" });
-}).catch(error => {
-  res.status(500).json({ status: "error", message: error.message });
-});
+  return transporter.sendMail(mailOptions)
+    .then(() => {
+      return res.status(200).json({ status: "sent" });
+    })
+    .catch(error => {
+      console.error("Email error:", error); // يظهر في Vercel logs
+      return res.status(500).json({ status: "error", message: error.message });
+    });
+}
