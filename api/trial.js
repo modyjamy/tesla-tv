@@ -11,38 +11,28 @@ export default async function handler(req, res) {
     service: "gmail",
     auth: {
       user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
-    },
+      pass: process.env.EMAIL_PASS
+    }
   });
 
   const mailOptions = {
     from: `"Tesla TV" <${process.env.EMAIL_USER}>`,
-    to: email,
-    subject: "📺 Tesla TV - 24H Free Trial Access",
+    to: process.env.EMAIL_USER, // ✉️ يوصلك إنت
+    subject: "🚨 New Trial Request - Tesla TV",
     html: `
-      <h2>📺 Your Free Trial is Ready!</h2>
-      <p>Hi <strong>${name}</strong>,</p>
-      <p>Here is your 24H IPTV trial:</p>
-      <pre><code>
-http://m3u-domain.com/get.php?username=testuser&password=testpass&type=m3u_plus&output=ts
-      </code></pre>
-      <p>Enjoy streaming! 🎬</p>
-    `,
+      <h2>New Trial Request</h2>
+      <p><strong>Name:</strong> ${name}</p>
+      <p><strong>Email:</strong> ${email}</p>
+      <p>📩 Please respond manually with the trial credentials.</p>
+    `
   };
 
   return transporter.sendMail(mailOptions)
-  .then(() => {
-    return res.status(200).json({
-      status: "sent",
-      data: {
-        message: "Email sent successfully"
-      }
+    .then(() => {
+      return res.status(200).json({ status: "sent" }); // ✅ المستخدم يشوف رسالة نجاح
+    })
+    .catch(error => {
+      console.error("Email error:", error);
+      return res.status(500).json({ status: "error", message: error.message });
     });
-  })
-  .catch(error => {
-    console.error("Email error:", error);
-    return res.status(500).json({
-      status: "error",
-      message: error.message
-    });
-  });
+}
