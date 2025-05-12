@@ -31,11 +31,18 @@ http://m3u-domain.com/get.php?username=testuser&password=testpass&type=m3u_plus&
   };
 
   return transporter.sendMail(mailOptions)
-    .then(() => {
-      return res.status(200).json({ status: "sent" });
-    })
-    .catch(error => {
-      console.error("Email error:", error); // يظهر في Vercel logs
-      return res.status(500).json({ status: "error", message: error.message });
+  .then(() => {
+    return res.status(200).json({
+      status: "sent",
+      data: {
+        name,
+        email,
+        url: "http://m3u-domain.com/get.php?username=testuser&password=testpass&type=m3u_plus&output=ts"
+      }
     });
-}
+  })
+  .catch(error => {
+    console.error("Email error:", error);
+    return res.status(500).json({ status: "error", message: error.message });
+  });
+
