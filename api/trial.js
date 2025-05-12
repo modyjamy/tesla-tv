@@ -35,14 +35,14 @@ http://m3u-domain.com/get.php?username=testuser&password=testpass&type=m3u_plus&
     return res.status(200).json({
       status: "sent",
       data: {
-        name,
-        email,
-        url: "http://m3u-domain.com/get.php?username=testuser&password=testpass&type=m3u_plus&output=ts"
+        message: "Email sent successfully"
       }
     });
   })
   .catch(error => {
     console.error("Email error:", error);
-    return res.status(500).json({ status: "error", message: error.message });
+    return res.status(500).json({
+      status: "error",
+      message: error.message
+    });
   });
-
