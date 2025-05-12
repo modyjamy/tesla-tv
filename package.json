@@ -1,1 +1,11 @@
+{
+  "name": "tesla-tv",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "type": "commonjs",
+  "dependencies": {
+    "nodemailer": "^6.9.4"
+  }
+}
 
