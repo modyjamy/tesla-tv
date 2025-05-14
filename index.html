@@ -189,19 +189,6 @@
   src="https://www.facebook.com/tr?id=673047952118955&ev=PageView&noscript=1"/>
 </noscript>
 <!-- End Facebook Pixel Code -->
-  <!-- Button that triggers the event -->
-<button type="button" id="submitBtn" 
-        style="background: #e50914; color: #fff; padding: 12px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;"
-        onclick="trackPixelEvent('Lead')">
-  Request Free Trial
-</button>
-
-<script>
-  // Function to track pixel events
-  function trackPixelEvent(eventName) {
-    fbq('track', eventName); // Track the event with Meta Pixel
-  }
-</script>
   <title>Tesla TV - Watch IPTV Online | 2051+ Live Channels, VOD & 24/7 Support</title>
    
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap" rel="stylesheet">
@@ -365,11 +352,19 @@
       </select>
 
       <!-- Submit Button -->
-      <button type="button" id="submitBtn" 
-              style="background: #e50914; color: #fff; padding: 12px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">
-        Request Free Trial
-      </button>
+      <!-- Button that triggers the event -->
+<button type="button" id="submitBtn" 
+        style="background: #e50914; color: #fff; padding: 12px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;"
+        onclick="trackPixelEvent('Lead')">
+  Request Free Trial
+</button>
 
+<script>
+  // Function to track pixel events
+  function trackPixelEvent(eventName) {
+    fbq('track', eventName); // Track the event with Meta Pixel
+  }
+</script>
       <!-- Information Text -->
       <p style="color: #999; font-size: 13px; text-align: center;">
         📧 We’ll send your trial details via email within 24 hours.
