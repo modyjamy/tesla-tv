@@ -3,7 +3,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ status: "error", message: "Method not allowed" });
   }
 
-  const { name, email } = req.body;
+  const { name, email, deviceType, app } = req.body; // استقبل البيانات الجديدة
 
   const nodemailer = require("nodemailer");
 
@@ -17,22 +17,23 @@ export default async function handler(req, res) {
 
   const mailOptions = {
     from: `"Tesla TV" <${process.env.EMAIL_USER}>`,
-    to: process.env.EMAIL_USER, // ✉️ يوصلك إنت
+    to: process.env.EMAIL_USER, // البريد اللي هيستقبل الطلبات
     subject: "🚨 New Trial Request - Tesla TV",
     html: `
       <h2>New Trial Request</h2>
       <p><strong>Name:</strong> ${name}</p>
       <p><strong>Email:</strong> ${email}</p>
+      <p><strong>Device Type:</strong> ${deviceType}</p>
+      <p><strong>Selected App:</strong> ${app}</p>
       <p>📩 Please respond manually with the trial credentials.</p>
     `
   };
 
-  return transporter.sendMail(mailOptions)
-    .then(() => {
-      return res.status(200).json({ status: "sent" }); // ✅ المستخدم يشوف رسالة نجاح
-    })
-    .catch(error => {
-      console.error("Email error:", error);
-      return res.status(500).json({ status: "error", message: error.message });
-    });
+  try {
+    await transporter.sendMail(mailOptions);
+    return res.status(200).json({ status: "sent" });
+  } catch (error) {
+    console.error("Email error:", error);
+    return res.status(500).json({ status: "error", message: error.message });
+  }
 }
