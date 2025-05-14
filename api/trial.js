@@ -3,8 +3,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ status: "error", message: "Method not allowed" });
   }
 
-  // تأكد من أن بيانات body موجودة
-  const { name, email, deviceType, app } = req.body;
+  const { name, email, deviceType, app } = req.body;  // تدمير البيانات من req.body
 
   if (!name || !email || !deviceType || !app) {
     return res.status(400).json({ status: "error", message: "Missing required fields" });
@@ -22,7 +21,7 @@ export default async function handler(req, res) {
 
   const mailOptions = {
     from: `"Tesla TV" <${process.env.EMAIL_USER}>`,
-    to: process.env.EMAIL_USER, // ✉️ يوصلك إنت
+    to: process.env.EMAIL_USER,
     subject: "🚨 New Trial Request - Tesla TV",
     html: `
       <h2>New Trial Request</h2>
@@ -36,9 +35,9 @@ export default async function handler(req, res) {
 
   try {
     await transporter.sendMail(mailOptions);
-    return res.status(200).json({ status: "sent" }); // ✅ إرسال البريد بنجاح
+    return res.status(200).json({ status: "sent" });
   } catch (error) {
     console.error("Email error:", error);
-    return res.status(500).json({ status: "error", message: error.message }); // ⚠️ في حال حدوث خطأ
+    return res.status(500).json({ status: "error", message: error.message });
   }
 }
