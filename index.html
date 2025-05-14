@@ -322,30 +322,58 @@
 
   <div style="display: flex; justify-content: center;">
     <form id="trialForm" 
-          style="width: 100%; max-width: 400px; background: #222; padding: 20px; border-radius: 10px; 
-                 display: flex; flex-direction: column; align-items: center; margin: 0 auto;">
+          style="width: 100%; max-width: 450px; background: #222; padding: 20px; border-radius: 10px; 
+                 display: grid; grid-template-columns: 1fr; gap: 20px;">
       
+      <!-- Full Name -->
       <input type="text" name="name" placeholder="Full Name" required 
-             style="width: 100%; padding: 10px; margin: 10px 0; border: none; border-radius: 5px; background: #333; color: #fff;" />
+             style="padding: 12px; border: 1px solid #444; border-radius: 5px; background: #333; color: #fff; font-size: 16px;">
       
+      <!-- Email Address -->
       <input type="email" name="email" placeholder="Email Address" required 
-             style="width: 100%; padding: 10px; margin: 10px 0; border: none; border-radius: 5px; background: #333; color: #fff;" />
+             style="padding: 12px; border: 1px solid #444; border-radius: 5px; background: #333; color: #fff; font-size: 16px;">
+
+      <!-- Device Type -->
+      <label for="deviceType" style="color: #ccc;">Device Type:</label>
+      <select id="deviceType" name="deviceType" required 
+              style="padding: 12px; border: 1px solid #444; border-radius: 5px; background: #333; color: #fff; font-size: 16px;">
+        <option value="">-- Select Device Type --</option>
+        <option value="smarttv">Smart TV</option>
+        <option value="android">Android / TV Box</option>
+        <option value="ios">iPhone / iPad</option>
+        <option value="pc">Windows / Mac</option>
+        <option value="enigma2">Enigma2 / Dreambox</option>
+      </select>
+
+      <!-- App Selection -->
+      <label for="app" style="color: #ccc;">Select App:</label>
+      <select id="app" name="app" required 
+              style="padding: 12px; border: 1px solid #444; border-radius: 5px; background: #333; color: #fff; font-size: 16px;">
+        <option value="">-- Select App --</option>
+      </select>
+
+      <!-- Additional Fields -->
+      <div id="additional-fields"></div>
       
+      <!-- Submit Button -->
       <button type="submit" 
-              style="width: 100%; background: #e50914; color: #fff; padding: 10px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">
+              style="background: #e50914; color: #fff; padding: 12px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">
         Request Free Trial
       </button>
 
-      <p style="color: #999; margin-top: 15px; font-size: 13px; text-align: center;">
+      <!-- Information Text -->
+      <p style="color: #999; font-size: 13px; text-align: center;">
         📧 We’ll send your trial details via email within 24 hours.
       </p>
       
     </form>
   </div>
+
+  <!-- Success Message -->
   <div id="success-message" style="display:none; margin-top: 20px; color: #00ff88; text-align: center;">
         🎉 Success! Check your email for your Tesla TV trial details.
     <a id="trial-link" href="#" target="_blank" style="color: #4caf50; font-weight: bold;"></a>
-      </div>
+  </div>
 </section>
 
 <section id="guide" style="padding: 80px 20px 120px 20px; background-color: #181818;">
