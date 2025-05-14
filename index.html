@@ -360,10 +360,15 @@
 </button>
 
 <script>
-  // Function to track pixel events
-  function trackPixelEvent(eventName) {
-    fbq('track', eventName); // Track the event with Meta Pixel
-  }
+  function trackPixelEvent(eventName, value) {
+    fbq('track', eventName, {
+        value: value,
+        currency: 'USD'
+    }); // إرسال الحدث مع القيمة
+}
+
+// استدعاء الحدث مع قيمة التجربة المجانية
+trackPixelEvent('StartTrial', 00.00); // قيمة الحدث: 00.00 (أي أن التجربة المجانية قيمتها 00 دولار)
 </script>
       <!-- Information Text -->
       <p style="color: #999; font-size: 13px; text-align: center;">
