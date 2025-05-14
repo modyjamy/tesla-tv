@@ -552,38 +552,46 @@
 
 <script>
   document.getElementById("trialForm").addEventListener("submit", function(e) {
-    e.preventDefault(); // يمنع الريلود التلقائي
+  e.preventDefault(); // يمنع الريلود التلقائي
 
-    const form = e.target;
-    const data = {
-      name: form.name.value,
-      email: form.email.value
-    };
+  const form = e.target;
+  const data = {
+    name: form.name.value.trim(),
+    email: form.email.value.trim(),
+    deviceType: form.deviceType.value,
+    app: form.app.value
+  };
 
-    // ✅ Track with Meta Pixel
-    fbq('track', 'Lead');
+  // تحقق من تعبئة الحقول كلها
+  if (!data.name || !data.email || !data.deviceType || !data.app) {
+    alert("Please fill all required fields.");
+    return;
+  }
 
-    // ✅ Send data to your Vercel API
-    fetch("/api/trial", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
-    })
-    .then(res => res.json())
-    .then(result => {
-      if (result.status === "sent") {
-        form.style.display = "none";
-        document.getElementById("success-message").style.display = "block";
-      } else {
-        alert("❌ Something went wrong: " + result.message);
-      }
-    })
-    .catch(err => {
-      alert("❌ Network error: " + err.message);
-    });
+  // ✅ Track with Meta Pixel
+  fbq('track', 'Lead');
+
+  // ✅ Send data to your Vercel API
+  fetch("/api/trial", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  })
+  .then(res => res.json())
+  .then(result => {
+    if (result.status === "sent") {
+      form.style.display = "none";
+      document.getElementById("success-message").style.display = "block";
+    } else {
+      alert("❌ Something went wrong: " + result.message);
+    }
+  })
+  .catch(err => {
+    alert("❌ Network error: " + err.message);
   });
+});
 </script>
 </body>
 </html>
