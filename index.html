@@ -334,8 +334,10 @@
 
 <section id="free-trial" style="padding: 80px 20px; background-color: #111; color: #fff;">
   <h2 style="text-align:center; color: #e50914;">Try Tesla TV for 24 Hours – Free!</h2>
-  <p style="text-align:center;">Fill out the form below to receive your free IPTV trial via email. <br>
-    You will be contacted within <strong>24 hours</strong> via the email you provide.</p>
+  <p style="text-align:center;">
+    Fill out the form below to receive your free IPTV trial via email. <br>
+    You will be contacted within <strong>24 hours</strong> via the email you provide.
+  </p>
 
   <div style="display: flex; justify-content: center;">
     <form id="trialForm" 
@@ -370,12 +372,10 @@
       </select>
       
       <!-- MAC Address -->
-      <input type="text" name="mac" 
-             style="padding: 12px; border: 1px solid #444; border-radius: 5px; background: #333; color: #fff; font-size: 16px;">
+      <input type="text" id="mac" name="mac" placeholder="MAC Address" style="padding: 12px; border: 1px solid #444; border-radius: 5px; background: #333; color: #fff; font-size: 16px; display:none;">
       
       <!-- Device ID -->
-      <input type="text" name="deviceId" 
-             style="padding: 12px; border: 1px solid #444; border-radius: 5px; background: #333; color: #fff; font-size: 16px;">
+      <input type="text" id="deviceId" name="deviceId" placeholder="Device ID" style="padding: 12px; border: 1px solid #444; border-radius: 5px; background: #333; color: #fff; font-size: 16px; display:none;">
       
       <!-- Submit Button -->
       <button type="submit" 
@@ -399,24 +399,22 @@
 </section>
 
 <script>
-  // Getting references to the device and app selects and the additional fields div
- const deviceSelect = document.getElementById('deviceType');
-const appSelect = document.getElementById('app');
-const additionalFieldsDiv = document.getElementById('additional-fields');
+  const deviceSelect = document.getElementById('deviceType');
+  const appSelect = document.getElementById('app');
+  const macInput = document.getElementById('mac');
+  const deviceIdInput = document.getElementById('deviceId');
 
-function createInputField(id, name, label, required = false) {
-  const inputHTML = `
-    <label for="${id}">${label}</label>
-    <input type="text" id="${id}" name="${name}" style="width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #444; border-radius: 5px; background: #333; color: #fff; font-size: 16px;" ${required ? 'required' : ''}>
-  `;
-  return inputHTML;
-}
-
-if (deviceSelect && appSelect && additionalFieldsDiv) {
   deviceSelect.addEventListener('change', function() {
     const selectedDevice = this.value;
     appSelect.innerHTML = '<option value="">-- Select App --</option>';
-    additionalFieldsDiv.innerHTML = '';
+
+    macInput.style.display = 'none';
+    macInput.required = false;
+    macInput.value = '';
+
+    deviceIdInput.style.display = 'none';
+    deviceIdInput.required = false;
+    deviceIdInput.value = '';
 
     if (selectedDevice === 'smarttv') {
       appSelect.innerHTML += `
@@ -453,21 +451,31 @@ if (deviceSelect && appSelect && additionalFieldsDiv) {
 
   appSelect.addEventListener('change', function() {
     const selectedApp = this.value;
-    additionalFieldsDiv.innerHTML = '';
+
+    macInput.style.display = 'none';
+    macInput.required = false;
+    macInput.value = '';
+
+    deviceIdInput.style.display = 'none';
+    deviceIdInput.required = false;
+    deviceIdInput.value = '';
 
     if (selectedApp === 'Smart IPTV' || selectedApp === 'Set IPTV') {
-      additionalFieldsDiv.innerHTML = createInputField('mac', 'mac', 'MAC Address:', true);
+      macInput.style.display = 'block';
+      macInput.required = true;
     } else if (selectedApp === 'IBO Player') {
-      additionalFieldsDiv.innerHTML = createInputField('mac', 'mac', 'MAC Address:', true) +
-        createInputField('deviceKey', 'deviceKey', 'Device Key:', true);
+      macInput.style.display = 'block';
+      macInput.required = true;
+      deviceIdInput.style.display = 'block';
+      deviceIdInput.required = true;
     } else if (selectedApp === 'Nora Go') {
-      additionalFieldsDiv.innerHTML = createInputField('mac', 'mac', 'MAC Address:', true) +
-        createInputField('activationCode', 'activationCode', 'Activation Code:', false);
+      macInput.style.display = 'block';
+      macInput.required = true;
+      deviceIdInput.style.display = 'block';
+      deviceIdInput.required = false;
     }
   });
-}
 </script>
-
 <section id="guide" style="padding: 80px 20px 120px 20px; background-color: #181818;">
   <h2 style="text-align:center; color: #e50914; font-size: 36px; margin-bottom: 30px;">📘 Guide</h2>
   <div style="max-width: 800px; margin: auto; color: #ccc; text-align: left; font-size: 18px; line-height: 1.8;">
