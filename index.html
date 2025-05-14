@@ -367,11 +367,11 @@
       <select id="app" name="app" required 
               style="padding: 12px; border: 1px solid #444; border-radius: 5px; background: #333; color: #fff; font-size: 16px;">
         <option value="">-- Select App --</option>
-        <option value="smartiptv">Smart IPTV</option>
-        <option value="iptvsmarters">IPTV Smarters</option>
-        <option value="xtream">Xtream</option>
       </select>
 
+      <!-- Additional Fields -->
+      <div id="additional-fields"></div>
+      
       <!-- Submit Button -->
       <button type="submit" 
               style="background: #e50914; color: #fff; padding: 12px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">
@@ -552,46 +552,38 @@
 
 <script>
   document.getElementById("trialForm").addEventListener("submit", function(e) {
-  e.preventDefault(); // يمنع الريلود التلقائي
+    e.preventDefault(); // يمنع الريلود التلقائي
 
-  const form = e.target;
-  const data = {
-    name: form.name.value.trim(),
-    email: form.email.value.trim(),
-    deviceType: form.deviceType.value,
-    app: form.app.value
-  };
+    const form = e.target;
+    const data = {
+      name: form.name.value,
+      email: form.email.value
+    };
 
-  // تحقق من تعبئة الحقول كلها
-  if (!data.name || !data.email || !data.deviceType || !data.app) {
-    alert("Please fill all required fields.");
-    return;
-  }
+    // ✅ Track with Meta Pixel
+    fbq('track', 'Lead');
 
-  // ✅ Track with Meta Pixel
-  fbq('track', 'Lead');
-
-  // ✅ Send data to your Vercel API
-  fetch("/api/trial", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(data)
-  })
-  .then(res => res.json())
-  .then(result => {
-    if (result.status === "sent") {
-      form.style.display = "none";
-      document.getElementById("success-message").style.display = "block";
-    } else {
-      alert("❌ Something went wrong: " + result.message);
-    }
-  })
-  .catch(err => {
-    alert("❌ Network error: " + err.message);
+    // ✅ Send data to your Vercel API
+    fetch("/api/trial", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(result => {
+      if (result.status === "sent") {
+        form.style.display = "none";
+        document.getElementById("success-message").style.display = "block";
+      } else {
+        alert("❌ Something went wrong: " + result.message);
+      }
+    })
+    .catch(err => {
+      alert("❌ Network error: " + err.message);
+    });
   });
-});
 </script>
 </body>
 </html>
