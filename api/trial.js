@@ -3,7 +3,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ status: "error", message: "Method not allowed" });
   }
 
-  const { name, email, deviceType, app } = req.body; // استقبل البيانات الجديدة
+  const { name, email, deviceType, app, mac, deviceKey, activationCode } = req.body; // استقبل البيانات الجديدة
 
   const nodemailer = require("nodemailer");
 
@@ -25,6 +25,9 @@ export default async function handler(req, res) {
       <p><strong>Email:</strong> ${email}</p>
       <p><strong>Device Type:</strong> ${deviceType}</p>
       <p><strong>Selected App:</strong> ${app}</p>
+      <p><strong>MAC Address:</strong> ${mac || 'N/A'}</p>
+      <p><strong>Device Key:</strong> ${deviceKey || 'N/A'}</p>
+      <p><strong>Activation Code:</strong> ${activationCode || 'N/A'}</p>
       <p>📩 Please respond manually with the trial credentials.</p>
     `
   };
