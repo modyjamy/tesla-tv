@@ -17,22 +17,26 @@ document.getElementById('trialForm').addEventListener('submit', async function(e
   const data = { name, email, deviceType, app };
 
   try {
-    const response = await fetch('/api/trial', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
+  const response = await fetch('/api/trial', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  });
 
-    const result = await response.json();
-
+  const text = await response.text(); // أولاً نقرأ الرد كنص
+  try {
+    const result = JSON.parse(text); // نجرب نحوله لـ JSON
     if (result.status === 'sent') {
-      // اظهار رسالة نجاح
       document.getElementById('success-message').style.display = 'block';
       form.reset();
     } else {
       alert(result.message || 'Something went wrong');
     }
-  } catch (error) {
-    alert('Error: ' + error.message);
+  } catch {
+    // لو مش JSON اعرض النص كما هو
+    alert('Server response error: ' + text);
   }
+} catch (error) {
+  alert('Network error: ' + error.message);
+}
 });
