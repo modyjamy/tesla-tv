@@ -1,43 +1,38 @@
-export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ status: "error", message: "Method not allowed" });
-  }
+document.getElementById('trialForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
 
-  const { name, email, deviceType, app } = req.body;  // تدمير البيانات من req.body
+  const form = e.target;
+  const name = form.name.value.trim();
+  const email = form.email.value.trim();
+  const deviceType = form.deviceType.value;
+  const app = form.app.value;
 
+  // تحقق من تعبئة الحقول
   if (!name || !email || !deviceType || !app) {
-    return res.status(400).json({ status: "error", message: "Missing required fields" });
+    alert('Please fill all required fields.');
+    return;
   }
 
-  const nodemailer = require("nodemailer");
-
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS
-    }
-  });
-
-  const mailOptions = {
-    from: `"Tesla TV" <${process.env.EMAIL_USER}>`,
-    to: process.env.EMAIL_USER,
-    subject: "🚨 New Trial Request - Tesla TV",
-    html: `
-      <h2>New Trial Request</h2>
-      <p><strong>Name:</strong> ${name}</p>
-      <p><strong>Email:</strong> ${email}</p>
-      <p><strong>Device Type:</strong> ${deviceType}</p>
-      <p><strong>App:</strong> ${app}</p>
-      <p>📩 Please respond manually with the trial credentials.</p>
-    `
-  };
+  // جهز البيانات للإرسال
+  const data = { name, email, deviceType, app };
 
   try {
-    await transporter.sendMail(mailOptions);
-    return res.status(200).json({ status: "sent" });
+    const response = await fetch('/api/trial', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+
+    const result = await response.json();
+
+    if (result.status === 'sent') {
+      // اظهار رسالة نجاح
+      document.getElementById('success-message').style.display = 'block';
+      form.reset();
+    } else {
+      alert(result.message || 'Something went wrong');
+    }
   } catch (error) {
-    console.error("Email error:", error);
-    return res.status(500).json({ status: "error", message: error.message });
+    alert('Error: ' + error.message);
   }
-}
+});
