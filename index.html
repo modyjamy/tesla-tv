@@ -376,6 +376,32 @@
   </div>
 </section>
 
+<script>
+  document.getElementById('deviceType').addEventListener('change', function() {
+    let deviceType = this.value;
+    let appSelect = document.getElementById('app');
+    appSelect.innerHTML = '<option value="">-- Select App --</option>'; // Reset app options
+
+    // Add app options based on the selected device type
+    if (deviceType === 'smarttv') {
+        appSelect.innerHTML += '<option value="smartapp1">Smart TV App 1</option>';
+        appSelect.innerHTML += '<option value="smartapp2">Smart TV App 2</option>';
+    } else if (deviceType === 'android') {
+        appSelect.innerHTML += '<option value="androidapp1">Android App 1</option>';
+        appSelect.innerHTML += '<option value="androidapp2">Android App 2</option>';
+    } else if (deviceType === 'ios') {
+        appSelect.innerHTML += '<option value="iosapp1">iOS App 1</option>';
+        appSelect.innerHTML += '<option value="iosapp2">iOS App 2</option>';
+    } else if (deviceType === 'pc') {
+        appSelect.innerHTML += '<option value="pcapp1">PC App 1</option>';
+        appSelect.innerHTML += '<option value="pcapp2">PC App 2</option>';
+    } else if (deviceType === 'enigma2') {
+        appSelect.innerHTML += '<option value="enigma2app1">Enigma2 App 1</option>';
+        appSelect.innerHTML += '<option value="enigma2app2">Enigma2 App 2</option>';
+    }
+  });
+</script>
+
 <section id="guide" style="padding: 80px 20px 120px 20px; background-color: #181818;">
   <h2 style="text-align:center; color: #e50914;">Guide</h2>
   <p style="max-width: 800px; margin: auto; color: #ccc; text-align: center;">
