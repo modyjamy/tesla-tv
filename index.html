@@ -321,16 +321,15 @@
     You will be contacted within <strong>24 hours</strong> via the email you provide.</p>
 
   <div style="display: flex; justify-content: center;">
-    <form id="trialForm" 
-          style="width: 100%; max-width: 450px; background: #222; padding: 20px; border-radius: 10px; 
-                 display: grid; grid-template-columns: 1fr; gap: 20px;">
+    <form id="trialForm" style="width: 100%; max-width: 450px; background: #222; padding: 20px; border-radius: 10px; 
+                              display: grid; grid-template-columns: 1fr; gap: 20px;">
       
       <!-- Full Name -->
-      <input type="text" name="name" placeholder="Full Name" required 
+      <input type="text" id="name" name="name" placeholder="Full Name" required 
              style="padding: 12px; border: 1px solid #444; border-radius: 5px; background: #333; color: #fff; font-size: 16px;">
       
       <!-- Email Address -->
-      <input type="email" name="email" placeholder="Email Address" required 
+      <input type="email" id="email" name="email" placeholder="Email Address" required 
              style="padding: 12px; border: 1px solid #444; border-radius: 5px; background: #333; color: #fff; font-size: 16px;">
 
       <!-- Device Type -->
@@ -352,11 +351,8 @@
         <option value="">-- Select App --</option>
       </select>
 
-      <!-- Additional Fields -->
-      <div id="additional-fields"></div>
-      
       <!-- Submit Button -->
-      <button type="submit" 
+      <button type="button" id="submitBtn" 
               style="background: #e50914; color: #fff; padding: 12px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">
         Request Free Trial
       </button>
@@ -375,6 +371,74 @@
     <a id="trial-link" href="#" target="_blank" style="color: #4caf50; font-weight: bold;"></a>
   </div>
 </section>
+
+<script>
+  document.getElementById('deviceType').addEventListener('change', function() {
+    let deviceType = this.value;
+    let appSelect = document.getElementById('app');
+    appSelect.innerHTML = '<option value="">-- Select App --</option>'; // Reset app options
+
+    // Add app options based on the selected device type
+    if (deviceType === 'smarttv') {
+        appSelect.innerHTML += '<option value="smartiptv">Smart IPTV</option>';
+        appSelect.innerHTML += '<option value="ssiptv">SS IPTV</option>';
+        appSelect.innerHTML += '<option value="iptvsmarters">IPTV Smarters Pro</option>';
+    } else if (deviceType === 'android') {
+        appSelect.innerHTML += '<option value="iptvsmarters">IPTV Smarters Pro</option>';
+        appSelect.innerHTML += '<option value="gsesmartiptv">GSE Smart IPTV</option>';
+        appSelect.innerHTML += '<option value="tivimate">TiviMate</option>';
+        appSelect.innerHTML += '<option value="perfectplayer">Perfect Player IPTV</option>';
+    } else if (deviceType === 'ios') {
+        appSelect.innerHTML += '<option value="iptvsmarters">IPTV Smarters</option>';
+        appSelect.innerHTML += '<option value="gsesmartiptv">GSE Smart IPTV</option>';
+        appSelect.innerHTML += '<option value="myiptvplayer">MyIPTV Player</option>';
+    } else if (deviceType === 'pc') {
+        appSelect.innerHTML += '<option value="vlc">VLC Media Player</option>';
+        appSelect.innerHTML += '<option value="kodi">Kodi</option>';
+        appSelect.innerHTML += '<option value="perfectplayer">Perfect Player IPTV</option>';
+    } else if (deviceType === 'enigma2') {
+        appSelect.innerHTML += '<option value="dreamplayer">DreamPlayer</option>';
+        appSelect.innerHTML += '<option value="enigmaiptv">Enigma2 IPTV Player</option>';
+    }
+  });
+
+  // Handle form submission via AJAX
+  document.getElementById('submitBtn').addEventListener('click', function() {
+    let name = document.getElementById('name').value;
+    let email = document.getElementById('email').value;
+    let deviceType = document.getElementById('deviceType').value;
+    let app = document.getElementById('app').value;
+
+    // Validate required fields
+    if (name && email && deviceType && app) {
+      let formData = new FormData();
+      formData.append('name', name);
+      formData.append('email', email);
+      formData.append('deviceType', deviceType);
+      formData.append('app', app);
+
+      // Send data to API
+      fetch('/api/trial', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === "sent") {
+          document.getElementById('success-message').style.display = 'block';
+        } else {
+          alert('There was an error processing your request. Please try again.');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('There was an error. Please try again later.');
+      });
+    } else {
+      alert('Please fill in all required fields.');
+    }
+  });
+</script>
 
 <script>
   document.getElementById('deviceType').addEventListener('change', function() {
