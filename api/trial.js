@@ -1,25 +1,28 @@
-// api/trial.js
-import nodemailer from "nodemailer";
-
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ status: "error", message: "Method not allowed" });
   }
 
+  // تأكد من أن بيانات body موجودة
   const { name, email, deviceType, app } = req.body;
 
-  // إعداد Nodemailer
+  if (!name || !email || !deviceType || !app) {
+    return res.status(400).json({ status: "error", message: "Missing required fields" });
+  }
+
+  const nodemailer = require("nodemailer");
+
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: process.env.EMAIL_USER, // حساب البريد الإلكتروني الذي ستُرسل منه الرسائل
-      pass: process.env.EMAIL_PASS  // كلمة مرور حساب البريد الإلكتروني
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS
     }
   });
 
   const mailOptions = {
     from: `"Tesla TV" <${process.env.EMAIL_USER}>`,
-    to: process.env.EMAIL_USER,  // هذا هو البريد الذي ستستقبل عليه الطلبات
+    to: process.env.EMAIL_USER, // ✉️ يوصلك إنت
     subject: "🚨 New Trial Request - Tesla TV",
     html: `
       <h2>New Trial Request</h2>
