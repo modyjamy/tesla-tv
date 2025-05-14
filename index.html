@@ -400,15 +400,23 @@
 
 <script>
   // Getting references to the device and app selects and the additional fields div
-  const deviceSelect = document.getElementById('deviceType');
-  const appSelect = document.getElementById('app');
-  const additionalFieldsDiv = document.getElementById('additional-fields');
+ const deviceSelect = document.getElementById('deviceType');
+const appSelect = document.getElementById('app');
+const additionalFieldsDiv = document.getElementById('additional-fields');
 
-  // Adding event listener for device selection change
+function createInputField(id, name, label, required = false) {
+  const inputHTML = `
+    <label for="${id}">${label}</label>
+    <input type="text" id="${id}" name="${name}" style="width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #444; border-radius: 5px; background: #333; color: #fff; font-size: 16px;" ${required ? 'required' : ''}>
+  `;
+  return inputHTML;
+}
+
+if (deviceSelect && appSelect && additionalFieldsDiv) {
   deviceSelect.addEventListener('change', function() {
     const selectedDevice = this.value;
-    appSelect.innerHTML = '<option value="">-- Select App --</option>'; // Reset app options
-    additionalFieldsDiv.innerHTML = ''; // Reset additional fields
+    appSelect.innerHTML = '<option value="">-- Select App --</option>';
+    additionalFieldsDiv.innerHTML = '';
 
     if (selectedDevice === 'smarttv') {
       appSelect.innerHTML += `
@@ -443,40 +451,21 @@
     }
   });
 
-  // Adding event listener for app selection change
   appSelect.addEventListener('change', function() {
     const selectedApp = this.value;
-    additionalFieldsDiv.innerHTML = ''; // Clear previous fields
+    additionalFieldsDiv.innerHTML = '';
 
-    // Showing fields based on the selected app
     if (selectedApp === 'Smart IPTV' || selectedApp === 'Set IPTV') {
-      additionalFieldsDiv.innerHTML = `
-        <label for="mac">MAC Address:</label>
-        <input type="text" id="mac" name="mac" required 
-               style="width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #444; border-radius: 5px; background: #333; color: #fff; font-size: 16px;">
-      `;
+      additionalFieldsDiv.innerHTML = createInputField('mac', 'mac', 'MAC Address:', true);
     } else if (selectedApp === 'IBO Player') {
-      additionalFieldsDiv.innerHTML = `
-        <label for="mac">MAC Address:</label>
-        <input type="text" id="mac" name="mac" required 
-               style="width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #444; border-radius: 5px; background: #333; color: #fff; font-size: 16px;">
-        
-        <label for="deviceKey">Device Key:</label>
-        <input type="text" id="deviceKey" name="deviceKey" required 
-               style="width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #444; border-radius: 5px; background: #333; color: #fff; font-size: 16px;">
-      `;
+      additionalFieldsDiv.innerHTML = createInputField('mac', 'mac', 'MAC Address:', true) +
+        createInputField('deviceKey', 'deviceKey', 'Device Key:', true);
     } else if (selectedApp === 'Nora Go') {
-      additionalFieldsDiv.innerHTML = `
-        <label for="mac">MAC Address:</label>
-        <input type="text" id="mac" name="mac" required 
-               style="width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #444; border-radius: 5px; background: #333; color: #fff; font-size: 16px;">
-        
-        <label for="activationCode">Activation Code:</label>
-        <input type="text" id="activationCode" name="activationCode" 
-               style="width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #444; border-radius: 5px; background: #333; color: #fff; font-size: 16px;">
-      `;
+      additionalFieldsDiv.innerHTML = createInputField('mac', 'mac', 'MAC Address:', true) +
+        createInputField('activationCode', 'activationCode', 'Activation Code:', false);
     }
   });
+}
 </script>
 
 <section id="guide" style="padding: 80px 20px 120px 20px; background-color: #181818;">
