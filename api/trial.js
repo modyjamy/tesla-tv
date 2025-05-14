@@ -1,42 +1,43 @@
-document.getElementById('trialForm').addEventListener('submit', async function(e) {
-  e.preventDefault();
+import nodemailer from "nodemailer";
 
-  const form = e.target;
-  const name = form.name.value.trim();
-  const email = form.email.value.trim();
-  const deviceType = form.deviceType.value;
-  const app = form.app.value;
-
-  // تحقق من تعبئة الحقول
-  if (!name || !email || !deviceType || !app) {
-    alert('Please fill all required fields.');
-    return;
+export default async function handler(req, res) {
+  if (req.method !== "POST") {
+    return res.status(405).json({ status: "error", message: "Method not allowed" });
   }
 
-  // جهز البيانات للإرسال
-  const data = { name, email, deviceType, app };
+  const { name, email, deviceType, app } = req.body;
 
-  try {
-  const response = await fetch('/api/trial', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data),
+  if (!name || !email || !deviceType || !app) {
+    return res.status(400).json({ status: "error", message: "Missing required fields" });
+  }
+
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    },
   });
 
-  const text = await response.text(); // أولاً نقرأ الرد كنص
+  const mailOptions = {
+    from: `"Tesla TV" <${process.env.EMAIL_USER}>`,
+    to: process.env.EMAIL_USER,
+    subject: "🚨 New Trial Request - Tesla TV",
+    html: `
+      <h2>New Trial Request</h2>
+      <p><strong>Name:</strong> ${name}</p>
+      <p><strong>Email:</strong> ${email}</p>
+      <p><strong>Device Type:</strong> ${deviceType}</p>
+      <p><strong>App:</strong> ${app}</p>
+      <p>📩 Please respond manually with the trial credentials.</p>
+    `,
+  };
+
   try {
-    const result = JSON.parse(text); // نجرب نحوله لـ JSON
-    if (result.status === 'sent') {
-      document.getElementById('success-message').style.display = 'block';
-      form.reset();
-    } else {
-      alert(result.message || 'Something went wrong');
-    }
-  } catch {
-    // لو مش JSON اعرض النص كما هو
-    alert('Server response error: ' + text);
+    await transporter.sendMail(mailOptions);
+    return res.status(200).json({ status: "sent" });
+  } catch (error) {
+    console.error("Email error:", error);
+    return res.status(500).json({ status: "error", message: error.toString() });
   }
-} catch (error) {
-  alert('Network error: ' + error.message);
 }
-});
