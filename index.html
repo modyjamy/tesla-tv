@@ -404,40 +404,44 @@
 
   // Handle form submission via AJAX
   document.getElementById('submitBtn').addEventListener('click', function() {
-    let name = document.getElementById('name').value;
-    let email = document.getElementById('email').value;
-    let deviceType = document.getElementById('deviceType').value;
-    let app = document.getElementById('app').value;
+  let name = document.getElementById('name').value;
+  let email = document.getElementById('email').value;
+  let deviceType = document.getElementById('deviceType').value;
+  let app = document.getElementById('app').value;
 
-    // Validate required fields
-    if (name && email && deviceType && app) {
-      let formData = new FormData();
-      formData.append('name', name);
-      formData.append('email', email);
-      formData.append('deviceType', deviceType);
-      formData.append('app', app);
+  // Validate required fields
+  if (name && email && deviceType && app) {
+    // تحويل البيانات إلى JSON
+    const data = {
+      name: name,
+      email: email,
+      deviceType: deviceType,
+      app: app
+    };
 
-      // Send data to API
-      fetch('/api/trial', {
-        method: 'POST',
-        body: formData
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.status === "sent") {
-          document.getElementById('success-message').style.display = 'block';
-        } else {
-          alert('There was an error processing your request. Please try again.');
-        }
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        alert('There was an error. Please try again later.');
-      });
-    } else {
-      alert('Please fill in all required fields.');
-    }
-  });
+    fetch('/api/trial', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json', // إرسال البيانات بتنسيق JSON
+      },
+      body: JSON.stringify(data) // تحويل البيانات إلى JSON
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.status === "sent") {
+        document.getElementById('success-message').style.display = 'block';
+      } else {
+        alert('There was an error processing your request. Please try again.');
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('There was an error. Please try again later.');
+    });
+  } else {
+    alert('Please fill in all required fields.');
+  }
+});
 </script>
 
 <script>
