@@ -3,7 +3,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ status: "error", message: "Method not allowed" });
   }
 
-  const { name, email, deviceType, app, mac, deviceKey, activationCode } = req.body; // استقبل البيانات الجديدة
+  const { name, email, deviceType, app, mac, deviceKey, activationCode } = req.body;
 
   const nodemailer = require("nodemailer");
 
@@ -17,7 +17,7 @@ export default async function handler(req, res) {
 
   const mailOptions = {
     from: `"Tesla TV" <${process.env.EMAIL_USER}>`,
-    to: process.env.EMAIL_USER, // البريد اللي هيستقبل الطلبات
+    to: process.env.EMAIL_USER,
     subject: "🚨 New Trial Request - Tesla TV",
     html: `
       <h2>New Trial Request</h2>
