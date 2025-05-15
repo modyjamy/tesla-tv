@@ -192,7 +192,7 @@ header a.cta-btn:hover {
   color: #fff;
   text-align: center;
   max-width: 600px;
-  margin: 0 auto;
+  margin: 100px auto 120px; /* مسافة علوية وسفلية للفصل عن الكروت */
   border-radius: 20px;
   box-shadow: 0 12px 50px rgba(0,0,0,0.8);
 }
@@ -278,7 +278,7 @@ header a.cta-btn:hover {
   background-color: #181818;
   color: #ccc;
   max-width: 1000px;
-  margin: 0 auto 120px;
+  margin: 120px auto; /* فصل واضح عن ما قبله وما بعده */
   padding: 100px 30px 140px;
   border-radius: 25px;
   box-shadow: 0 10px 50px rgba(0,0,0,0.85);
@@ -307,6 +307,11 @@ header a.cta-btn:hover {
 
 #guide a:hover {
   text-decoration: underline;
+}
+
+/* General section spacing fix to prevent overlap */
+section {
+  margin-bottom: 100px;
 }
 
 /* How It Works Section */
