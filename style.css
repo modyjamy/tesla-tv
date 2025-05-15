@@ -143,15 +143,16 @@ header a.cta-btn:hover {
 
 .card ul {
   list-style: none;
-  padding-left: 20px;
+  padding-left: 0;
   margin-bottom: 30px;
 }
 
 .card ul li {
+  position: relative;
+  padding-left: 26px;
   margin-bottom: 14px;
   font-size: 1.1rem;
   line-height: 1.6;
-  position: relative;
   color: #ccc;
 }
 
@@ -159,10 +160,10 @@ header a.cta-btn:hover {
   content: "✔";
   position: absolute;
   left: 0;
+  top: 2px;
   color: #e50914;
   font-weight: 900;
   font-size: 1.2rem;
-  top: 0;
 }
 
 /* Card Button */
@@ -184,7 +185,6 @@ header a.cta-btn:hover {
   box-shadow: 0 12px 50px #ff1f3f;
   transform: scale(1.05);
 }
-
 /* Free Trial Section */
 #free-trial {
   background-color: #111;
